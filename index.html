@@ -657,34 +657,63 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .search-container {
-                max-width: none;
-            }
-
-            .plants-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 16px;
-            }
-
-            .plant-info-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .modal-content {
-                width: 95%;
-                margin: 20px;
-            }
-
-            .filter-tabs {
-                margin: 16px 0;
-            }
-        }
+    .header-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .header-left {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+    
+    .logo {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .logo span {
+        font-size: 1.2rem;
+    }
+    
+    .header-actions {
+        flex-shrink: 0;
+    }
+    
+    .header-right {
+        width: 100%;
+        order: -1; /* Поиск появится сверху */
+    }
+    
+    .search-container {
+        max-width: none;
+        width: 100%;
+    }
+    
+    .header-btn span:not(.btn-icon) {
+        display: none;
+    }
+    
+    .header-btn {
+        min-width: 36px;
+        justify-content: center;
+        padding: 8px 10px;
+    }
+    
+    .filter-tabs {
+        margin-top: 16px;
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: none;
+        left: auto;
+    }
+    
+    .action-bar {
+        margin-top: 16px;
+    }
+}
 
         /* PWA Install Button */
         .install-btn {
