@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - Herbal Trinity</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2d5016">
+    <meta name="description" content="Recommended books on medicinal plants and herbal medicine">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5016;
+            --primary-light: #457916;
+            --secondary: #ff8c3a;
+            --accent: #74b272;
+            --bg-light: #f8fdf5;
+            --bg-dark: #1a2e0d;
+            --text-dark: #2d5016;
+            --text-light: #ffffff;
+            --shadow: rgba(45, 80, 22, 0.1);
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e8f5e8 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--text-light);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 2px solid;
+            border-image: linear-gradient(145deg, rgba(255,193,7,0.8), rgba(116,178,114,0.8)) 1;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 0 20px rgba(255,193,7,0.3),
+                0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.3) contrast(1.2) saturate(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 40px 0 24px 0;
+            border-radius: var(--border-radius);
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            box-shadow: 0 2px 16px var(--shadow);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-tab.active {
+            background: var(--secondary);
+            color: var(--text-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 140, 58, 0.3);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: var(--bg-light);
+            transform: translateY(-1px);
+        }
+
+        /* Page Title */
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .page-title h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 32px var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(45, 80, 22, 0.2);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary-light) 100%);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+
+        .amazon-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #ff9900;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .book-content {
+            padding: 24px;
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .book-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .amazon-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #ff9900, #ff7700);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .amazon-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 153, 0, 0.3);
+        }
+
+        .preview-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .preview-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo span {
+                font-size: 1.2rem;
+            }
+
+            .nav-tabs {
+                margin: 32px 16px 24px 16px;
+                padding: 8px;
+            }
+
+            .nav-tab {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .book-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <div class="logo-icon">
+                        <img src="images/LOGO.png" alt="Herbal Trinity Logo" onerror="this.parentElement.innerHTML='🌿'">
+                    </div>
+                    <span>DIGITAL HERBAL ENCYCLOPEDIA</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab">🌿 Plants</a>
+            <a href="books.html" class="nav-tab active">📚 Books</a>
+            <a href="about.html" class="nav-tab">👤 About Author</a>
+        </div>
+
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>📚 Recommended Books</h1>
+            <p>Essential reading for herbal medicine enthusiasts and practitioners</p>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="images/book1-cover.jpg" alt="Book 1 Cover" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDM1MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiM3NGIyNzIiLz48dGV4dCB4PSIxNzUiIHk9IjE1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj7wn5OPPC90ZXh0Pjx0ZXh0IHg9IjE3NSIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxNiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkJvb2sgQ292ZXI8L3RleHQ+PC9zdmc+'" 
+                         loading="lazy">
+                    <div class="amazon-badge">Amazon</div>
+                </div>
+                <div class="book-content">
+                    <h3 class="book-title">Your Book Title Here #1</h3>
+                    <p class="book-subtitle">Your Book Subtitle Here - Complete Guide to Something</p>
+                    <p class="book-description">
+                        Write your book description here. This should be an engaging summary that explains what readers will learn from this book and why it's valuable for their herbal medicine journey. Keep it concise but informative.
+                    </p>
+                    <div class="book-actions">
+                        <a href="https://amazon.com/your-book-link-1" target="_blank" class="amazon-btn">
+                            🛒 Buy on Amazon
+                        </a>
+                        <button class="preview-btn" onclick="showPreview('book1')">Preview</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="images/book2-cover.jpg" alt="Book 2 Cover" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDM1MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiM0NTc5MTYiLz48dGV4dCB4PSIxNzUiIHk9IjE1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj7wn5OPPC90ZXh0Pjx0ZXh0IHg9IjE3NSIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxNiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkJvb2sgQ292ZXI8L3RleHQ+PC9zdmc+'" 
+                         loading="lazy">
+                    <div class="amazon-badge">Amazon</div>
+                </div>
+                <div class="book-content">
+                    <h3 class="book-title">Your Book Title Here #2</h3>
+                    <p class="book-subtitle">Your Second Book Subtitle - Advanced Techniques</p>
+                    <p class="book-description">
+                        Description for your second book goes here. Explain what makes this book unique and valuable. Perhaps this is a more advanced book or covers a different aspect of herbal medicine that complements your first book.
+                    </p>
+                    <div class="book-actions">
+                        <a href="https://amazon.com/your-book-link-2" target="_blank" class="amazon-btn">
+                            🛒 Buy on Amazon
+                        </a>
+                        <button class="preview-btn" onclick="showPreview('book2')">Preview</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-cover">
+                    <img src="images/book3-cover.jpg" alt="Book 3 Cover" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzUwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDM1MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM1MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiNmZjhjM2EiLz48dGV4dCB4PSIxNzUiIHk9IjE1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIj7wn5OPPC90ZXh0Pjx0ZXh0IHg9IjE3NSIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxNiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkJvb2sgQ292ZXI8L3RleHQ+PC9zdmc+'" 
+                         loading="lazy">
+                    <div class="amazon-badge">Amazon</div>
+                </div>
+                <div class="book-content">
+                    <h3 class="book-title">Your Book Title Here #3</h3>
+                    <p class="book-subtitle">Your Third Book Subtitle - Practical Applications</p>
+                    <p class="book-description">
+                        Description for your third book. This could be a practical guide, recipe book, or specialized topic within herbal medicine. Highlight what makes this book special and who would benefit most from reading it.
+                    </p>
+                    <div class="book-actions">
+                        <a href="https://amazon.com/your-book-link-3" target="_blank" class="amazon-btn">
+                            🛒 Buy on Amazon
+                        </a>
+                        <button class="preview-btn" onclick="showPreview('book3')">Preview</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPreview(bookId) {
+            // Placeholder for book preview functionality
+            alert(`Preview for ${bookId} - this can be implemented to show book samples`);
+        }
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
