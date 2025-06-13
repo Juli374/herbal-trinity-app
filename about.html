@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Author - Herbal Trinity</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2d5016">
+    <meta name="description" content="About the author - expert in medicinal plants and herbal medicine">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d5016;
+            --primary-light: #457916;
+            --secondary: #ff8c3a;
+            --accent: #74b272;
+            --bg-light: #f8fdf5;
+            --bg-dark: #1a2e0d;
+            --text-dark: #2d5016;
+            --text-light: #ffffff;
+            --shadow: rgba(45, 80, 22, 0.1);
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e8f5e8 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--text-light);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 2px solid;
+            border-image: linear-gradient(145deg, rgba(255,193,7,0.8), rgba(116,178,114,0.8)) 1;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 0 20px rgba(255,193,7,0.3),
+                0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.3) contrast(1.2) saturate(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 40px 0 24px 0;
+            border-radius: var(--border-radius);
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            box-shadow: 0 2px 16px var(--shadow);
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: var(--text-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: var(--bg-light);
+            transform: translateY(-1px);
+        }
+
+        /* Author Section */
+        .author-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+
+        .author-header {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+            align-items: start;
+            margin-bottom: 40px;
+        }
+
+        .author-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .author-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .author-photo:hover img {
+            transform: scale(1.05);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .author-name {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .author-title {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .author-credentials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .credential-badge {
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .amazon-author-btn {
+            background: linear-gradient(135deg, #ff9900, #ff7700);
+            color: white;
+        }
+
+        .books-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, var(--secondary), #ff6b1a);
+            color: white;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Biography Section */
+        .biography {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .bio-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .bio-content p {
+            margin-bottom: 20px;
+        }
+
+        /* Expertise Grid */
+        .expertise-section {
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .expertise-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .expertise-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .expertise-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .expertise-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .contact-item h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .contact-item a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo span {
+                font-size: 1.2rem;
+            }
+
+            .nav-tabs {
+                margin: 32px 16px 24px 16px;
+                padding: 8px;
+            }
+
+            .nav-tab {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .author-section {
+                padding: 24px;
+            }
+
+            .author-header {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .author-photo {
+                width: 250px;
+                height: 250px;
+                margin: 0 auto;
+            }
+
+            .author-name {
+                font-size: 2rem;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .social-btn {
+                flex: 1;
+                justify-content: center;
+                min-width: 120px;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <div class="logo-icon">
+                        <img src="images/LOGO.png" alt="Herbal Trinity Logo" onerror="this.parentElement.innerHTML='🌿'">
+                    </div>
+                    <span>DIGITAL HERBAL ENCYCLOPEDIA</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab">🌿 Plants</a>
+            <a href="books.html" class="nav-tab">📚 Books</a>
+            <a href="about.html" class="nav-tab active">👤 About Author</a>
+        </div>
+
+        <!-- Author Section -->
+        <div class="author-section">
+            <div class="author-header">
+                <div class="author-photo">
+                    <img src="images/author-photo.jpg" alt="Author Photo" 
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTUwIiByPSIxNTAiIGZpbGw9IiM3NGIyNzIiLz48Y2lyY2xlIGN4PSIxNTAiIGN5PSIxMjAiIHI9IjUwIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMDAgMjIwQzEwMCAyMDAgMTIwIDE4MCAxNTAgMTgwUzIwMCAyMDAgMjAwIDIyMFYyNDBIMTAwVjIyMFoiIGZpbGw9IndoaXRlIi8+PC9zdmc+'" 
+                         loading="lazy">
+                </div>
+                <div class="author-info">
+                    <h1 class="author-name">Your Name Here</h1>
+                    <p class="author-title">Herbalist • Author • Educator</p>
+                    
+                    <div class="author-credentials">
+                        <span class="credential-badge">🎓 Your Degree/Certification</span>
+                        <span class="credential-badge">🌿 X Years Experience</span>
+                        <span class="credential-badge">📚 Author of X Books</span>
+                        <span class="credential-badge">🏆 Your Achievement</span>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://amazon.com/author/your-author-page" target="_blank" class="social-btn amazon-author-btn">
+                            📚 Amazon Author Page
+                        </a>
+                        <a href="books.html" class="social-btn books-btn">
+                            📖 My Books
+                        </a>
+                        <a href="mailto:your-email@example.com" class="social-btn contact-btn">
+                            ✉️ Contact Me
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biography -->
+            <div class="biography">
+                <h2 class="section-title">📖 Biography</h2>
+                <div class="bio-content">
+                    <p>
+                        Write your biographical information here. This is where you can tell your story - how you became interested in herbal medicine, your educational background, and what drives your passion for plants.
+                    </p>
+                    <p>
+                        Include details about your journey into herbalism, any formal training or education, memorable experiences with plant medicine, and what led you to write books on the subject.
+                    </p>
+                    <p>
+                        You can also mention your philosophy about herbal medicine, your approach to teaching others, and what you hope readers will gain from your work.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expertise Section -->
+        <div class="expertise-section">
+            <h2 class="section-title">🌟 Areas of Expertise</h2>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <div class="expertise-icon">🌿</div>
+                    <h4 class="expertise-title">Medicinal Plants</h4>
+                    <p class="expertise-description">
+                        Describe your expertise with medicinal plants - perhaps specific plants you specialize in, or particular therapeutic applications.
+                    </p>
+                </div>
+                
+                <div class="expertise-item">
+                    <div class="expertise-icon">🧪</div>
+                    <h4 class="expertise-title">Herbal Preparations</h4>
+                    <p class="expertise-description">
+                        Detail your knowledge of creating tinctures, teas, salves, and other herbal preparations. Your preferred methods and techniques.
+                    </p>
+                </div>
+                
+                <div class="expertise-item">
+                    <div class="expertise-icon">📚</div>
+                    <h4 class="expertise-title">Education & Writing</h4>
+                    <p class="expertise-description">
+                        Your experience in teaching herbalism, writing books, conducting workshops, or other educational activities.
+                    </p>
+                </div>
+                
+                <div class="expertise-item">
+                    <div class="expertise-icon">🎯</div>
+                    <h4 class="expertise-title">Your Specialty</h4>
+                    <p class="expertise-description">
+                        Add your specific area of specialization - whether it's women's health, digestive issues, stress management, or another focus area.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2 class="section-title">📞 Get In Touch</h2>
+            <p>Interested in learning more about herbal medicine or have questions about my books?</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>📧 Email</h4>
+                    <a href="mailto:your-email@example.com">your-email@example.com</a>
+                    <p>For general inquiries and questions</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>📚 Amazon Author</h4>
+                    <a href="https://amazon.com/author/your-author-page" target="_blank">View My Amazon Page</a>
+                    <p>Browse all my published works</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h4>🌐 Website</h4>
+                    <a href="https://your-website.com" target="_blank">your-website.com</a>
+                    <p>Visit my personal website</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation for images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
+        });
+    </script>
+</body>
+</html>
