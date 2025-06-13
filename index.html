@@ -794,6 +794,15 @@
             font-size: 0.85rem;
             margin-top: 4px;
         }
+        .nav-tab {
+    background: linear-gradient(135deg, var(--secondary), #ff6b1a) !important;
+    color: white !important;
+}
+
+.nav-tab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 58, 0.3);
+}
     </style>
 </head>
 <body>
@@ -815,14 +824,16 @@
         </header>
 
         <!-- Filter Tabs -->
-        <div class="filter-tabs">
-            <button class="filter-tab active" data-filter="all">All Plants</button>
-            <button class="filter-tab" data-filter="digestive">Digestive</button>
-            <button class="filter-tab" data-filter="respiratory">Respiratory</button>
-            <button class="filter-tab" data-filter="nervous">Nervous System</button>
-            <button class="filter-tab" data-filter="immune">Immune Support</button>
-            <button class="filter-tab" data-filter="skin">Skin Care</button>
-        </div>
+<div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All Plants</button>
+    <button class="filter-tab" data-filter="digestive">Digestive</button>
+    <button class="filter-tab" data-filter="respiratory">Respiratory</button>
+    <button class="filter-tab" data-filter="nervous">Nervous System</button>
+    <button class="filter-tab" data-filter="immune">Immune Support</button>
+    <button class="filter-tab" data-filter="skin">Skin Care</button>
+    <button class="filter-tab nav-tab" onclick="window.location.href='books.html'">📚 Books</button>
+    <button class="filter-tab nav-tab" onclick="window.location.href='about.html'">👤 About Author</button>
+</div>
 
         <!-- Plants Grid -->
         <div class="plants-grid" id="plantsGrid">
